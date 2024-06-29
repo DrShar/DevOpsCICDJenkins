@@ -1,0 +1,87 @@
+// Pipeline with 7 Stages: Build, Test, Code Analysis, Security Scan, 
+// Deploy to Staging, Integration Tests on Staging , and Deploy to Production 
+// and sending email notification to myself at various stages of build completion at 
+// shar.deakin@gmail.com 
+
+pipeline {
+    agent any
+
+    environment {
+        DIRECTORY_PATH = '/Users/shar/Documents/Deakin/Study/2024/T1 2024/SIT753 Professional Practice in Information Technology/OnTrack/6.1C'
+        TESTING_ENVIRONMENT = 'testing_environment'
+        PRODUCTION_ENVIRONMENT = 'production_environment' 
+    }
+    
+    stages{
+        stage('Build') {
+            steps { 
+                echo 'Installing Packages.. Compiling Code..'
+                echo 'Building Application..'
+            }
+        }
+        stage('Test') {
+            steps { 
+                echo 'Performing Tests using Mocha'
+                echo 'Running Unit Tests..'
+                echo 'Running Integration Tests..'
+            }
+            post { 
+                always {
+                    emailext(
+                        to: 'shar.deakin@gmail.com',
+                        subject: "Job: ${currentBuild.fullDisplayName} | Testing Complete", 
+                        body: "Unit and Integration Tests are now Complete! // Build Number: ${currentBuild.number} | Build Status: ${currentBuild.result} | Access Attached Log for Details"
+                    )    
+                }
+            }
+        }
+        stage('Code Analysis') {
+            steps { 
+                echo 'Commencing Code Analysis using SonarQube'
+                echo 'Analysing..'
+            }
+        }
+        stage('Security Scan') {
+            steps { 
+                echo 'Performing Security Scan using OWASP Dependency Check and ZAP'
+                echo 'Scaning..' 
+            }
+            post { 
+                always {
+                    emailext(
+                        to: 'shar.deakin@gmail.com',
+                        subject: "Job: ${currentBuild.fullDisplayName} | Scanning Complete", 
+                        body: "Job is ${currentBuild.result}! // Build Number: ${currentBuild.number} | Build Status: ${currentBuild.result} | Access Attached Log for Details"
+                    )    
+                }
+            }
+        }
+        stage('Deploy to Staging') {
+            steps { 
+                echo 'AWS Fargate for Scalable,Secure, Simple, Serverless Framework '
+                echo 'Deploying to Staging..'
+            }
+        }
+        stage('Integraion Tests on Staging') {
+            steps { 
+                echo 'Performing Integraton Tests on Staging using Mocha'
+                echo 'Running Integraion Test..'
+            }
+        }
+        stage('Deploy to Production') {
+            steps { 
+                echo 'AWS Fargate for Scalable, Secure, Simple, Serverless Framework'
+                echo 'Deploying to Production..'
+            }
+        }
+    }
+   post { 
+        always {
+            emailext(
+                to: 'shar.deakin@gmail.com',
+                subject: "Job: ${currentBuild.fullDisplayName} | Pipeline Status: ${currentBuild.result}", 
+                body: "Job is ${currentBuild.result}! // Build Number: ${currentBuild.number} | Build Status: ${currentBuild.result} | Access Attached Log for Details"
+            )    
+        }
+    }
+} 

@@ -30,7 +30,8 @@ pipeline {
                     emailext(
                         to: 'shar.deakin@gmail.com',
                         subject: "Job: ${currentBuild.fullDisplayName} | Testing Complete", 
-                        body: "Unit and Integration Tests are now Complete! // Build Number: ${currentBuild.number} | Build Status: ${currentBuild.result} | Access Attached Log for Details"
+                        body: "Unit and Integration Tests are now Complete! // Build Number: ${currentBuild.number} | Build Status: ${currentBuild.result} | Access Attached Log for Details",
+                        attachLog: true
                     )    
                 }
             }
@@ -51,7 +52,8 @@ pipeline {
                     emailext(
                         to: 'shar.deakin@gmail.com',
                         subject: "Job: ${currentBuild.fullDisplayName} | Scanning Complete", 
-                        body: "Job is ${currentBuild.result}! // Build Number: ${currentBuild.number} | Build Status: ${currentBuild.result} | Access Attached Log for Details"
+                        body: "Job is ${currentBuild.result}! // Build Number: ${currentBuild.number} | Build Status: ${currentBuild.result} | Access Attached Log for Details",
+                        attachLog: true
                     )    
                 }
             }
@@ -80,7 +82,8 @@ pipeline {
             emailext(
                 to: 'shar.deakin@gmail.com',
                 subject: "Job: ${currentBuild.fullDisplayName} | Pipeline Status: ${currentBuild.result}", 
-                body: "Job is ${currentBuild.result}! // Build Number: ${currentBuild.number} | Build Status: ${currentBuild.result} | Access Attached Log for Details"
+                body: "Job is ${currentBuild.result}! // Build Number: ${currentBuild.number} | Build Status: ${currentBuild.result} | Access Attached Log for Details",
+                attachLog: true
             )    
         }
     }

@@ -52,7 +52,7 @@ pipeline {
                     emailext(
                         to: 'shar.deakin@gmail.com',
                         subject: "Job: ${currentBuild.fullDisplayName} | Scanning Complete", 
-                        body: "Job is ${currentBuild.result}! // Build Number: ${currentBuild.number} | Build Status: ${currentBuild.result} | Access Attached Log for Details",
+                        body: "Security Scan is now Complete! // Build Number: ${currentBuild.number} | Build Status: ${currentBuild.result} | Access Attached Log for Details",
                         attachLog: true
                     )    
                 }
